@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sss.restaurant.goods.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.sss.restaurant.goods.model.Goods">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sub_name" jdbcType="VARCHAR" property="subName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="amount_origin" jdbcType="DECIMAL" property="amountOrigin" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="pics" jdbcType="VARCHAR" property="pics" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="qty_sale" jdbcType="INTEGER" property="qtySale" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="sale_status" jdbcType="INTEGER" property="saleStatus" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="updator" jdbcType="VARCHAR" property="updator" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, category_id, name, sub_name, description, amount_origin, amount, pics, stock, 
+    qty_sale, weight, sale_status, status, create_time, creator, update_time, updator
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.sss.restaurant.goods.model.Goods">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_goods (category_id, name, sub_name, 
+      description, amount_origin, amount, 
+      pics, stock, qty_sale, 
+      weight, sale_status, status, 
+      create_time, creator, update_time, 
+      updator)
+    values (#{categoryId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{subName,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{amountOrigin,jdbcType=DECIMAL}, #{amount,jdbcType=DECIMAL}, 
+      #{pics,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{qtySale,jdbcType=INTEGER}, 
+      #{weight,jdbcType=INTEGER}, #{saleStatus,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sss.restaurant.goods.model.Goods">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="subName != null">
+        sub_name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="amountOrigin != null">
+        amount_origin,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="pics != null">
+        pics,
+      </if>
+      <if test="stock != null">
+        stock,
+      </if>
+      <if test="qtySale != null">
+        qty_sale,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="saleStatus != null">
+        sale_status,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updator != null">
+        updator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="subName != null">
+        #{subName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="amountOrigin != null">
+        #{amountOrigin,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="pics != null">
+        #{pics,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null">
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="qtySale != null">
+        #{qtySale,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="saleStatus != null">
+        #{saleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null">
+        #{updator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sss.restaurant.goods.model.Goods">
+    update sys_goods
+    <set>
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="subName != null">
+        sub_name = #{subName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="amountOrigin != null">
+        amount_origin = #{amountOrigin,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="pics != null">
+        pics = #{pics,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null">
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="qtySale != null">
+        qty_sale = #{qtySale,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="saleStatus != null">
+        sale_status = #{saleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null">
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sss.restaurant.goods.model.Goods">
+    update sys_goods
+    set category_id = #{categoryId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      sub_name = #{subName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      amount_origin = #{amountOrigin,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=DECIMAL},
+      pics = #{pics,jdbcType=VARCHAR},
+      stock = #{stock,jdbcType=INTEGER},
+      qty_sale = #{qtySale,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
+      sale_status = #{saleStatus,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
