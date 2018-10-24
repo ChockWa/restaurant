@@ -17,10 +17,19 @@ public class Result {
 
     public static Result SUCCESS = new Result(0,null,null);
 
+    public static Result FAIL(Integer code, String msg){
+        return new Result(code, msg, null);
+    }
+
     public Result(Integer code, String msg, Map<String, Object> data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
+    }
+
+    public Result(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
     }
 
     public Integer getCode() {
