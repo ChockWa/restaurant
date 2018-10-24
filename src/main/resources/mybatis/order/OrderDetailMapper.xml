@@ -161,4 +161,24 @@
       updator = #{updator,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="getGoodsSaleCountQuery">
+    select IFNULL(count(*),0)
+    from sys_order_detail a
+    left join sys_order b on a.order_no = b.order_no
+    where
+    1 = 1
+    <if test="goodsId != null">
+      and a.goods_id = #{goodsId}
+    </if>
+    <if test="orderStatus != null">
+      and b.order_status = #{orderStatus}
+    </if>
+    <if test="beginCreateTime != null">
+      <![CDATA[and a.create_time >= #{beginCreateTime,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="endCreateTime != null">
+      <![CDATA[and a.create_time <= #{endCreateTime,jdbcType=TIMESTAMP}]]>
+    </if>
+  </select>
 </mapper>

@@ -3,8 +3,10 @@ package com.sss.restaurant.controller;
 import com.sss.restaurant.table.dao.TableMapper;
 import com.sss.restaurant.table.model.Table;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.Jedis;
 
 @RestController
 public class TestController {
@@ -12,9 +14,17 @@ public class TestController {
     @Autowired
     private TableMapper tableMapper;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @RequestMapping("get")
-    public Table get(){
-//        return null;
-        return tableMapper.selectByPrimaryKey(1L);
+    public String get(){
+        return redisTemplate.opsForValue().get("name").toString();
     }
+
+    @RequestMapping("set")
+    public void set(){
+        redisTemplate.opsForValue().set("name","hehehehehe");
+    }
+
 }

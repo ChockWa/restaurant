@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sss.restaurant.order.model.OrderDetail;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Map;
+
 @Mapper
 public interface OrderDetailMapper extends BaseMapper<OrderDetail>{
     int deleteByPrimaryKey(Long id);
@@ -17,4 +19,11 @@ public interface OrderDetailMapper extends BaseMapper<OrderDetail>{
     int updateByPrimaryKeySelective(OrderDetail record);
 
     int updateByPrimaryKey(OrderDetail record);
+
+    /**
+     * 根据条件统计商品销售数量
+     * @param query
+     * @return
+     */
+    int getGoodsSaleCountQuery(Map<String,Object> query);
 }

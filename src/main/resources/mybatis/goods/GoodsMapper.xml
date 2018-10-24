@@ -13,6 +13,7 @@
     <result column="stock" jdbcType="INTEGER" property="stock" />
     <result column="qty_sale" jdbcType="INTEGER" property="qtySale" />
     <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="praise" jdbcType="INTEGER" property="praise" />
     <result column="sale_status" jdbcType="INTEGER" property="saleStatus" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -22,7 +23,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, category_id, name, sub_name, description, amount_origin, amount, pics, stock, 
-    qty_sale, weight, sale_status, status, create_time, creator, update_time, updator
+    qty_sale, weight, sale_status, status, create_time, creator, update_time, updator, praise
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -43,13 +44,13 @@
       pics, stock, qty_sale, 
       weight, sale_status, status, 
       create_time, creator, update_time, 
-      updator)
+      updator, praise)
     values (#{categoryId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{subName,jdbcType=VARCHAR}, 
       #{description,jdbcType=VARCHAR}, #{amountOrigin,jdbcType=DECIMAL}, #{amount,jdbcType=DECIMAL}, 
       #{pics,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{qtySale,jdbcType=INTEGER}, 
       #{weight,jdbcType=INTEGER}, #{saleStatus,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{updator,jdbcType=VARCHAR})
+      #{updator,jdbcType=VARCHAR}, #{praise,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.sss.restaurant.goods.model.Goods">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -105,6 +106,9 @@
       <if test="updator != null">
         updator,
       </if>
+      <if test="praise != null">
+        praise,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="categoryId != null">
@@ -154,6 +158,9 @@
       </if>
       <if test="updator != null">
         #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="praise != null">
+        #{praise},
       </if>
     </trim>
   </insert>
@@ -208,6 +215,9 @@
       <if test="updator != null">
         updator = #{updator,jdbcType=VARCHAR},
       </if>
+      <if test="praise != null">
+        praise = #{praise},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -228,7 +238,38 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       creator = #{creator,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      updator = #{updator,jdbcType=VARCHAR}
+      updator = #{updator,jdbcType=VARCHAR},
+      praise = #{praise,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <resultMap type="com.sss.restaurant.goods.dto.CategoryGoodsDto" id="categoryGoodsMap">
+    <result column="categoryName" property="categoryName"/>
+    <collection property="goodsList" ofType="com.sss.restaurant.goods.dto.GoodsDto" column="id">
+      <id column="goodsId" property="goodsId"/>
+      <result column="goodsName" property="goodsName"/>
+      <result column="description" property="description"/>
+      <result column="amountOrigin" property="amountOrigin"/>
+      <result column="amount" property="amount"/>
+      <result column="praise" property="praise"/>
+      <result column="stock" property="stock"/>
+    </collection>
+  </resultMap>
+  <select id="getCategoryGoodsList" resultMap="categoryGoodsMap">
+    select
+    a.name categoryName,
+    b.id goodsId,
+    b.name goodsName,
+    b.description,
+    b.amount_origin amountOrigin,
+    b.amount,
+    b.praise,
+    b.stock
+    from sys_category a
+    left join sys_goods b on a.id = b.category_id
+    where
+    a.status = 1
+    and b.status = 1
+    and b.sale_status = 1
+  </select>
 </mapper>
