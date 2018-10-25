@@ -5,6 +5,7 @@ import com.sss.restaurant.common.utils.DateUtils;
 import com.sss.restaurant.goods.dao.GoodsMapper;
 import com.sss.restaurant.goods.dto.CategoryGoodsDto;
 import com.sss.restaurant.goods.dto.GoodsDto;
+import com.sss.restaurant.goods.model.Goods;
 import com.sss.restaurant.order.contants.OrderStatusEnum;
 import com.sss.restaurant.order.service.OrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,22 @@ public class GoodsService {
             for(GoodsDto goodsDto : categoryGoodsDto.getGoodsList()){
                 goodsDto.setSaleCountMonth(orderDetailService.getGoodsSaleCountQuery(ImmutableMap.of("goodsId",goodsDto.getGoodsId(),
                         "orderStatus", OrderStatusEnum.FINISH.getCode(),"beginCreateTime",beginCreateTime,"endCreateTime",now)));
+
+                // 能否购买1-能购买2-已售光
+                goodsDto.setBuyStatus(goodsDto.getStock() > 1 ? 1 : 2);
             }
         }
         return list;
+    }
+
+    /**
+     * 根据商品id查询商品信息
+     * @param goodsId
+     * @return
+     */
+    public Goods getGoodsById(Long goodsId){
+        if(null == goodsId) return null;
+
+        return goodsMapper.selectByPrimaryKey(goodsId);
     }
 }

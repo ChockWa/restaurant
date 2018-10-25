@@ -162,7 +162,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="getGoodsSaleCountQuery">
+  <select id="getGoodsSaleCountQuery" resultType="int">
     select IFNULL(count(*),0)
     from sys_order_detail a
     left join sys_order b on a.order_no = b.order_no

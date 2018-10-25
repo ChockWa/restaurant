@@ -19,6 +19,6 @@ public class GoodsController {
      */
     @RequestMapping("getCategoryGoodsList")
     public Result getCategoryGoodsList(){
-        return Result.SUCCESS.setData(goodsService.getCategoryGoodsList(null));
+        return Result.SUCCESS.setData("list",goodsService.getCategoryGoodsList(null));
     }
 }

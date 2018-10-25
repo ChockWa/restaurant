@@ -29,7 +29,7 @@ public class GoodsDto {
     private int saleCountMonth;
 
     // 获得赞数
-    private int praiseCount;
+    private int praise;
 
     // 库存
     private int stock;
@@ -109,11 +109,11 @@ public class GoodsDto {
         this.saleCountMonth = saleCountMonth;
     }
 
-    public int getPraiseCount() {
-        return praiseCount;
+    public int getPraise() {
+        return praise;
     }
 
-    public void setPraiseCount(int praiseCount) {
-        this.praiseCount = praiseCount;
+    public void setPraise(int praise) {
+        this.praise = praise;
     }
 }

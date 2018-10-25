@@ -3,6 +3,7 @@ package com.sss.restaurant.goods.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -38,12 +39,12 @@ public class Goods implements Serializable {
     /**
      * 商品原价
      */
-    private Long amountOrigin;
+    private BigDecimal amountOrigin;
 
     /**
      * 商品销售价
      */
-    private Long amount;
+    private BigDecimal amount;
 
     /**
      * 商品图片(多张图片用逗号隔开)
@@ -137,19 +138,19 @@ public class Goods implements Serializable {
         this.description = description;
     }
 
-    public Long getAmountOrigin() {
+    public BigDecimal getAmountOrigin() {
         return amountOrigin;
     }
 
-    public void setAmountOrigin(Long amountOrigin) {
+    public void setAmountOrigin(BigDecimal amountOrigin) {
         this.amountOrigin = amountOrigin;
     }
 
-    public Long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

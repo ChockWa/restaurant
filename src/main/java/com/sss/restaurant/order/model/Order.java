@@ -3,6 +3,7 @@ package com.sss.restaurant.order.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -33,17 +34,17 @@ public class Order implements Serializable {
     /**
      * 原来总金额
      */
-    private Long totalAmount;
+    private BigDecimal totalAmount;
 
     /**
      * 实际总金额
      */
-    private Long actAmount;
+    private BigDecimal actAmount;
 
     /**
      * 优惠总金额
      */
-    private Long discount;
+    private BigDecimal discount;
 
     /**
      * 下单时间
@@ -139,27 +140,27 @@ public class Order implements Serializable {
         this.payOrderNo = payOrderNo;
     }
 
-    public Long getTotalAmount() {
+    public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Long totalAmount) {
+    public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public Long getActAmount() {
+    public BigDecimal getActAmount() {
         return actAmount;
     }
 
-    public void setActAmount(Long actAmount) {
+    public void setActAmount(BigDecimal actAmount) {
         this.actAmount = actAmount;
     }
 
-    public Long getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Long discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
 
