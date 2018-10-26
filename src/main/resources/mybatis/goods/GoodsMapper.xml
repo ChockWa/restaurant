@@ -264,7 +264,8 @@
     b.amount_origin amountOrigin,
     b.amount,
     b.praise,
-    b.stock
+    b.stock,
+    b.total
     from sys_category a
     left join sys_goods b on a.id = b.category_id
     where

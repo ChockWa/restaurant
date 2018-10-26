@@ -52,6 +52,11 @@ public class Goods implements Serializable {
     private String pics;
 
     /**
+     * 总数量
+     */
+    private Integer total;
+
+    /**
      * 库存
      */
     private Integer stock;
@@ -97,6 +102,14 @@ public class Goods implements Serializable {
     private String updator;
 
     private static final long serialVersionUID = 1L;
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
 
     public Long getId() {
         return id;

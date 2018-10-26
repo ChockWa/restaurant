@@ -31,11 +31,22 @@ public class GoodsDto {
     // 获得赞数
     private int praise;
 
+    // 商品总数
+    private int total;
+
     // 库存
     private int stock;
 
     // 购买状态1-可购买2-已售光
     private Integer buyStatus;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
     public Integer getBuyStatus() {
         return buyStatus;

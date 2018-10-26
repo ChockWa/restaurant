@@ -43,6 +43,7 @@ public class GoodsService {
 
                 // 能否购买1-能购买2-已售光
                 goodsDto.setBuyStatus(goodsDto.getStock() > 1 ? 1 : 2);
+
             }
         }
         return list;
