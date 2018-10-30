@@ -39,4 +39,12 @@ public class PayService {
 
         return order;
     }
+
+    /**
+     * 支付成功进行商品解锁，更新库存
+     * @param orderNo
+     */
+    private void paySuccUnlockUpdateStock(String orderNo){
+
+    }
 }
