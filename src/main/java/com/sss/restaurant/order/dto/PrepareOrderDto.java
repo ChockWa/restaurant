@@ -1,5 +1,7 @@
 package com.sss.restaurant.order.dto;
 
+import com.sss.restaurant.order.model.OrderDetail;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -14,8 +16,19 @@ public class PrepareOrderDto {
     // 优惠总价
     private BigDecimal discountAmount;
 
+    // 订单号
+    private String orderNo;
+
     // 商品列表
-    private List<PlaceOrderDto> goodsList;
+    private List<OrderDetail> goodsList;
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
 
     public BigDecimal getTotalAmount() {
         return totalAmount;
@@ -41,11 +54,11 @@ public class PrepareOrderDto {
         this.discountAmount = discountAmount;
     }
 
-    public List<PlaceOrderDto> getGoodsList() {
+    public List<OrderDetail> getGoodsList() {
         return goodsList;
     }
 
-    public void setGoodsList(List<PlaceOrderDto> goodsList) {
+    public void setGoodsList(List<OrderDetail> goodsList) {
         this.goodsList = goodsList;
     }
 }

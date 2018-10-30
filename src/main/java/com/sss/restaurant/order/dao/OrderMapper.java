@@ -17,4 +17,11 @@ public interface OrderMapper extends BaseMapper<Order>{
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+    /**
+     * 根据订单号查询订单信息
+     * @param orderNo
+     * @return
+     */
+    Order selectByOrderNo(String orderNo);
 }

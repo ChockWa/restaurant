@@ -1,9 +1,8 @@
 package com.sss.restaurant.common.response;
 
 
-import org.apache.commons.beanutils.BeanUtils;
+import com.sss.restaurant.common.utils.BeanUtils;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,13 +59,7 @@ public class Result {
     }
 
     public Result setData(Object obj) {
-        try {
-            BeanUtils.populate(obj,this.data);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        this.data = BeanUtils.bean2Map(obj);
         return this;
     }
 

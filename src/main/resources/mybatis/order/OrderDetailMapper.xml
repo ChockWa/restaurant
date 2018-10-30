@@ -181,4 +181,19 @@
       <![CDATA[and a.create_time <= #{endCreateTime,jdbcType=TIMESTAMP}]]>
     </if>
   </select>
+
+  <select id="insertBatch">
+    insert into sys_order_detail
+    (order_no, goods_id, num,
+    amount_origin, amount, discount,
+    create_time, creator, update_time,
+    updator)
+    values
+    <foreach collection="goodsDetailList" index="index" item="item" separator=",">
+      (#{item.orderNo,jdbcType=VARCHAR}, #{item.goodsId,jdbcType=BIGINT}, #{item.num,jdbcType=INTEGER},
+      #{item.amountOrigin,jdbcType=DECIMAL}, #{item.amount,jdbcType=DECIMAL}, #{item.discount,jdbcType=DECIMAL},
+      #{item.createTime,jdbcType=TIMESTAMP}, #{item.creator,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP},
+      #{item.updator,jdbcType=VARCHAR})
+    </foreach>
+  </select>
 </mapper>

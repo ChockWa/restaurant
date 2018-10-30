@@ -136,4 +136,12 @@
       updator = #{updator,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByUid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from sys_table
+    where uid = #{uid}
+    and status = 1
+  </select>
 </mapper>

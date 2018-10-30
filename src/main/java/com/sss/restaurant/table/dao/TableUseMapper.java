@@ -3,6 +3,7 @@ package com.sss.restaurant.table.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sss.restaurant.table.model.TableUse;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface TableUseMapper extends BaseMapper<TableUse>{
@@ -17,4 +18,6 @@ public interface TableUseMapper extends BaseMapper<TableUse>{
     int updateByPrimaryKeySelective(TableUse record);
 
     int updateByPrimaryKey(TableUse record);
+
+    TableUse selectByUidAndToken(@Param("accessToken")String accessToken, @Param("uid")String uid);
 }

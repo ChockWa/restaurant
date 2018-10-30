@@ -31,7 +31,7 @@ public class Table implements Serializable {
     private Integer num;
 
     /**
-     * 状态1-空闲2-点餐中
+     * 状态1-正常2-删除
      */
     private Integer status;
 

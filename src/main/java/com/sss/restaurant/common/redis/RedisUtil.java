@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 @Component
 public class RedisUtil {
@@ -51,5 +52,13 @@ public class RedisUtil {
 
     public long incBy(String key, int step){
         return redisTemplate.opsForValue().increment(key,step);
+    }
+
+    public void deleteByKeys(List<String> keys){
+        redisTemplate.delete(keys);
+    }
+
+    public void deleteByKey(String key){
+        redisTemplate.delete(key);
     }
 }

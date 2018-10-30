@@ -17,4 +17,11 @@ public interface TableMapper extends BaseMapper<Table>{
     int updateByPrimaryKeySelective(Table record);
 
     int updateByPrimaryKey(Table record);
+
+    /**
+     * 通过uid获取table信息
+     * @param uid
+     * @return
+     */
+    Table selectByUid(String uid);
 }

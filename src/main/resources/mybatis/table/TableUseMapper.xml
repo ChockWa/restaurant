@@ -3,7 +3,8 @@
 <mapper namespace="com.sss.restaurant.table.dao.TableUseMapper">
   <resultMap id="BaseResultMap" type="com.sss.restaurant.table.model.TableUse">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="table_id" jdbcType="BIGINT" property="tableId" />
+    <result column="table_uid" jdbcType="VARCHAR" property="tableUid" />
+    <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
     <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -11,7 +12,7 @@
     <result column="over_time" jdbcType="TIMESTAMP" property="overTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, table_id, order_no, status, create_time, submit_time, over_time
+    id, table_uid, order_no, status, create_time, submit_time, over_time, access_token
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -27,12 +28,12 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into sys_table_use (table_id, order_no, status, 
-      create_time, submit_time, over_time
+    insert into sys_table_use (table_uid, order_no, status,
+      create_time, submit_time, over_time, access_token
       )
-    values (#{tableId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{submitTime,jdbcType=TIMESTAMP}, #{overTime,jdbcType=TIMESTAMP}
-      )
+    values (#{tableUid,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP}, #{submitTime,jdbcType=TIMESTAMP}, #{overTime,jdbcType=TIMESTAMP},
+      #{accessToken,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.sss.restaurant.table.model.TableUse">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -40,8 +41,11 @@
     </selectKey>
     insert into sys_table_use
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="tableId != null">
-        table_id,
+      <if test="tableUid != null">
+        table_uid,
+      </if>
+      <if test="accessToken != null">
+        access_token,
       </if>
       <if test="orderNo != null">
         order_no,
@@ -60,8 +64,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="tableId != null">
-        #{tableId,jdbcType=BIGINT},
+      <if test="tableUid != null">
+        #{tableUid,jdbcType=VARCHAR},
+      </if>
+      <if test="accessToken != null">
+        #{accessToken,jdbcType=VARCHAR},
       </if>
       <if test="orderNo != null">
         #{orderNo,jdbcType=VARCHAR},
@@ -83,8 +90,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.sss.restaurant.table.model.TableUse">
     update sys_table_use
     <set>
-      <if test="tableId != null">
-        table_id = #{tableId,jdbcType=BIGINT},
+      <if test="tableUid != null">
+        table_uid = #{tableUid,jdbcType=VARCHAR},
+      </if>
+      <if test="accessToken != null">
+        access_token = #{accessToken,jdbcType=VARCHAR},
       </if>
       <if test="orderNo != null">
         order_no = #{orderNo,jdbcType=VARCHAR},
@@ -106,7 +116,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.sss.restaurant.table.model.TableUse">
     update sys_table_use
-    set table_id = #{tableId,jdbcType=BIGINT},
+    set table_uid = #{tableUid,jdbcType=VARCHAR},
+      access_token = #{accessToken,jdbcType=VARCHAR},
       order_no = #{orderNo,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -114,4 +125,14 @@
       over_time = #{overTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByUidAndToken" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from sys_table_use
+    where access_token = #{accessToken}
+    <if test="tableUid != null and tableUid != ''">
+      and table_uid = #{tableUid}
+    </if>
+  </select>
 </mapper>

@@ -16,9 +16,14 @@ public class TableUse implements Serializable {
     private Long id;
 
     /**
-     * 桌子id
+     * 桌子uid
      */
-    private Long tableId;
+    private String tableUid;
+
+    /**
+     * token
+     */
+    private String accessToken;
 
     /**
      * 订单号
@@ -47,6 +52,14 @@ public class TableUse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
     public Long getId() {
         return id;
     }
@@ -55,12 +68,12 @@ public class TableUse implements Serializable {
         this.id = id;
     }
 
-    public Long getTableId() {
-        return tableId;
+    public String getTableUid() {
+        return tableUid;
     }
 
-    public void setTableId(Long tableId) {
-        this.tableId = tableId;
+    public void setTableUid(String tableUid) {
+        this.tableUid = tableUid;
     }
 
     public String getOrderNo() {
