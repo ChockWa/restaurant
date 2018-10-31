@@ -1,5 +1,6 @@
 package com.sss.restaurant.order.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
@@ -20,6 +21,11 @@ public class Order implements Serializable {
      * 订单所属用户
      */
     private String uid;
+
+    /**
+     * 桌子uid
+     */
+    private String tableUid;
 
     /**
      * 订单号
@@ -106,7 +112,29 @@ public class Order implements Serializable {
      */
     private String updator;
 
+    /**
+     * 桌子名称
+     */
+    @TableField(exist = false)
+    private String tableName;
+
     private static final long serialVersionUID = 1L;
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    public String getTableUid() {
+        return tableUid;
+    }
+
+    public void setTableUid(String tableUid) {
+        this.tableUid = tableUid;
+    }
 
     public Long getId() {
         return id;

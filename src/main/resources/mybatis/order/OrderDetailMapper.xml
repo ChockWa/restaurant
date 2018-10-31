@@ -196,4 +196,50 @@
       #{item.updator,jdbcType=VARCHAR})
     </foreach>
   </select>
+
+  <select id="getOrderDetailListByOrderNo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_order_detail
+    where order_no = #{orderNo}
+  </select>
+
+  <resultMap type="com.sss.restaurant.order.dto.OrderDetailDto" id="orderDetailMap">
+    <result column="tableName" jdbcType="VARCHAR" property="tableName" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="pay_order_no" jdbcType="VARCHAR" property="payOrderNo" />
+    <result column="total_amount" jdbcType="DECIMAL" property="totalAmount" />
+    <result column="act_amount" jdbcType="DECIMAL" property="actAmount" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="place_order_time" jdbcType="TIMESTAMP" property="placeOrderTime" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="over_time" jdbcType="TIMESTAMP" property="overTime" />
+    <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime" />
+    <result column="goods_num" jdbcType="INTEGER" property="goodsNum" />
+    <result column="order_status" jdbcType="INTEGER" property="orderStatus" />
+    <result column="pay_status" jdbcType="INTEGER" property="payStatus" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <collection property="orderDetailList" ofType="com.sss.restaurant.order.model.OrderDetail" column="id">
+      <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+      <result column="goodsName" jdbcType="VARCHAR" property="goodsName" />
+      <result column="num" jdbcType="INTEGER" property="num" />
+      <result column="amount_origin" jdbcType="DECIMAL" property="amountOrigin" />
+      <result column="amount" jdbcType="DECIMAL" property="amount" />
+      <result column="discount1" jdbcType="DECIMAL" property="discount" />
+    </collection>
+  </resultMap>
+  <select id="getOrderDetail" resultMap="orderDetailMap">
+    select
+    c.name tableName,
+    a.order_no, a.pay_order_no, a.total_amount, a.act_amount, a.discount, a.place_order_time, a.pay_time,
+    a.over_time, a.cancel_time, a.goods_num, a.order_status, a.pay_status, a.status,
+    b.goods_id, b.num, b.amount_origin, b.amount, b.discount discount1,
+    d.name goodsName
+    from sys_order a
+    inner join sys_table c on a.table_uid = c.uid
+    left join sys_order_detail b on a.order_no = b.order_no
+    left join sys_goods d on b.goods_id = d.id
+    where
+    a.order_no = #{orderNo}
+  </select>
 </mapper>

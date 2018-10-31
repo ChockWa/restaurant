@@ -1,6 +1,7 @@
 package com.sss.restaurant.order.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sss.restaurant.order.dto.OrderDetailDto;
 import com.sss.restaurant.order.model.OrderDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -35,4 +36,18 @@ public interface OrderDetailMapper extends BaseMapper<OrderDetail>{
      * @return
      */
     int insertBatch(@Param("goodsDetailList")List<OrderDetail> goodsDetailList);
+
+    /**
+     * 根据订单号查询订单详情列表
+     * @param orderNo
+     * @return
+     */
+    List<OrderDetail> getOrderDetailListByOrderNo(String orderNo);
+
+    /**
+     * 根据订单号查询订单详情
+     * @param orderNo
+     * @return
+     */
+    OrderDetailDto getOrderDetail(String orderNo);
 }

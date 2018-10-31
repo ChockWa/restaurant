@@ -1,5 +1,6 @@
 package com.sss.restaurant.order.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
@@ -66,7 +67,21 @@ public class OrderDetail implements Serializable {
      */
     private String updator;
 
+    /**
+     * 商品名称
+     */
+    @TableField(exist = false)
+    private String goodsName;
+
     private static final long serialVersionUID = 1L;
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
 
     public Long getId() {
         return id;

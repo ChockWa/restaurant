@@ -28,4 +28,11 @@ public interface GoodsMapper extends BaseMapper<Goods>{
      * @return
      */
     List<CategoryGoodsDto> getCategoryGoodsList(Map<String,Object> params);
+
+    /**
+     * 更新库存
+     * @param params
+     * @return
+     */
+    int updateStock(Map<String,Object> params);
 }

@@ -4,6 +4,7 @@ import com.sss.restaurant.common.response.Result;
 import com.sss.restaurant.table.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,7 +19,7 @@ public class TableController {
      * @return
      */
     @RequestMapping("openTable")
-    public Result openTable(){
-        return Result.SUCCESS.setData("accessToken",tableService.openTable(null));
+    public Result openTable(@RequestParam("tableUid")String tableUid, @RequestParam("deviceId")String deviceId){
+        return Result.SUCCESS.setData("accessToken",tableService.openTable(deviceId, tableUid));
     }
 }

@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.sss.restaurant.order.model.Order">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="table_uid" jdbcType="VARCHAR" property="tableUid" />
     <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="pay_order_no" jdbcType="VARCHAR" property="payOrderNo" />
     <result column="total_amount" jdbcType="DECIMAL" property="totalAmount" />
@@ -23,7 +24,7 @@
     <result column="updator" jdbcType="VARCHAR" property="updator" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, uid, order_no, pay_order_no, total_amount, act_amount, discount, place_order_time, 
+    id, uid, table_uid, order_no, pay_order_no, total_amount, act_amount, discount, place_order_time,
     pay_time, over_time, cancel_time, goods_num, order_status, pay_status, status, create_time, 
     creator, update_time, updator
   </sql>
@@ -41,14 +42,14 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into sys_order (uid, order_no, pay_order_no, 
+    insert into sys_order (uid, table_uid, order_no, pay_order_no,
       total_amount, act_amount, discount, 
       place_order_time, pay_time, over_time, 
       cancel_time, goods_num, order_status, 
       pay_status, status, create_time, 
       creator, update_time, updator
       )
-    values (#{uid,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{payOrderNo,jdbcType=VARCHAR}, 
+    values (#{uid,jdbcType=VARCHAR}, #{tableUid,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{payOrderNo,jdbcType=VARCHAR},
       #{totalAmount,jdbcType=DECIMAL}, #{actAmount,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, 
       #{placeOrderTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, #{overTime,jdbcType=TIMESTAMP}, 
       #{cancelTime,jdbcType=TIMESTAMP}, #{goodsNum,jdbcType=INTEGER}, #{orderStatus,jdbcType=INTEGER}, 
@@ -64,6 +65,9 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uid != null">
         uid,
+      </if>
+      <if test="tableUid != null">
+        table_uid,
       </if>
       <if test="orderNo != null">
         order_no,
@@ -120,6 +124,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uid != null">
         #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="tableUid != null">
+        #{tableUid,jdbcType=VARCHAR},
       </if>
       <if test="orderNo != null">
         #{orderNo,jdbcType=VARCHAR},
@@ -180,6 +187,9 @@
       <if test="uid != null">
         uid = #{uid,jdbcType=VARCHAR},
       </if>
+      <if test="tableUid != null">
+        table_uid = #{tableUid,jdbcType=VARCHAR},
+      </if>
       <if test="orderNo != null">
         order_no = #{orderNo,jdbcType=VARCHAR},
       </if>
@@ -237,6 +247,7 @@
   <update id="updateByPrimaryKey" parameterType="com.sss.restaurant.order.model.Order">
     update sys_order
     set uid = #{uid,jdbcType=VARCHAR},
+      table_uid = #{tableUid,jdbcType=VARCHAR},
       order_no = #{orderNo,jdbcType=VARCHAR},
       pay_order_no = #{payOrderNo,jdbcType=VARCHAR},
       total_amount = #{totalAmount,jdbcType=DECIMAL},
@@ -261,5 +272,25 @@
     <include refid="Base_Column_List" />
     from sys_order
     where order_no = #{orderNo}
+  </select>
+
+  <select id="getOrderList" resultType="com.sss.restaurant.order.model.Order">
+    select
+    a.id, a.uid, a.table_uid tableUid, a.order_no orderNo, a.pay_order_no payOrderNo, a.total_amount totalAmount,
+    a.act_amount actAmount, a.discount, a.place_order_time placeOrderTime,
+    a.pay_time payTime, a.over_time overTime, a.cancel_time cancelTime, a.goods_num goodsNum, a.order_status orderStatus,
+    a.pay_status payStatus, a.status, a.create_time createTime,
+    a.creator, a.update_time updateTime, a.updator,
+    b.name tableName
+    from sys_order a
+    left join sys_table b on a.table_uid = b.uid
+    where
+    1 = 1
+    <if test="uid != null and uid != ''">
+      and a.uid = #{uid}
+    </if>
+    <if test="tableUid != null and tableUid != ''">
+      and a.table_uid = #{tableUid}
+    </if>
   </select>
 </mapper>

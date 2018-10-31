@@ -1,6 +1,6 @@
 package com.sss.restaurant.common.interceptor;
 
-import com.sss.restaurant.common.info.TableUseInfo;
+import com.sss.restaurant.common.info.UserInfo;
 import com.sss.restaurant.common.redis.RedisUtil;
 import com.sss.restaurant.exception.CommonException;
 import org.apache.commons.lang3.StringUtils;
@@ -27,14 +27,12 @@ public class AccessInterceptor implements HandlerInterceptor{
     private RedisUtil redisUtil;
 
     @Autowired
-    private TableUseInfo tableUseInfo;
+    private UserInfo userInfo;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 检查会话
-        checkAccessToken(request.getParameter("accessToken"));
-        // 保存桌子使用记录信息
-        tableUseInfo.saveInfo(request.getParameter(request.getParameter("accessToken")));
+        // 检查会话并设置用户绑定信息
+        checkAccessTokenAndSetUserInfo(request.getParameter("accessToken"));
         return true;
     }
 
@@ -47,17 +45,19 @@ public class AccessInterceptor implements HandlerInterceptor{
     }
 
     /**
-     * 检查会话
+     * 检查会话并设置用户绑定信息
      * @param accessToken
      */
-    private void checkAccessToken(String accessToken){
+    private void checkAccessTokenAndSetUserInfo(String accessToken){
         if(StringUtils.isBlank(accessToken)){
             throw CommonException.TOKEN_EXPIRE;
         }
 
-        String uid = (String) redisUtil.get(accessToken);
-        if(uid == null){
+        String content = (String) redisUtil.get(accessToken);
+        if(StringUtils.isBlank(content)){
             throw CommonException.TOKEN_EXPIRE;
         }
+
+        userInfo.setUserInfo(content);
     }
 }

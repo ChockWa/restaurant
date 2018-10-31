@@ -273,4 +273,10 @@
     and b.status = 1
     and b.sale_status = 1
   </select>
+
+  <update id="updateStock" parameterType="Map">
+    update sys_goods
+    set stock = stock - #{number}
+    where id = #{id}
+  </update>
 </mapper>
