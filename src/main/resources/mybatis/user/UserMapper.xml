@@ -80,17 +80,17 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectByUid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from sys_user
-    where uid = #{uid,jdbcType=BIGINT}
+    where uid = #{uid}
   </select>
 
-  <select id="selectByDeviceId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByDeviceId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from sys_user
-    where device_id = #{deviceId,jdbcType=BIGINT}
+    where device_id = #{deviceId}
   </select>
 </mapper>

@@ -60,7 +60,7 @@ public class OrderService {
         if(goodsList == null || goodsList.size() < 1 || StringUtils.isBlank(uid) || StringUtils.isBlank(tableUid))
             throw CommonException.PARAMS_NOT_NULL.format("桌子id，用户id，商品列表");
 
-        String orderNo = GenNumberUtil.genOrderNo(null);
+        String orderNo = GenNumberUtil.genOrderNo();
         try{
             CommonLock.STOCK_LOCK.lock();
             // 生成订单号
@@ -90,6 +90,7 @@ public class OrderService {
                 orderDetail.setNum(placeOrderDto.getNumber());
                 orderDetail.setCreateTime(new Date());
                 orderDetail.setGoodsName(goods.getName());
+                orderDetail.setOrderNo(orderNo);
                 orderDetails.add(orderDetail);
 
                 totalAmount = totalAmount.add(goodsTotalAmount);
@@ -121,7 +122,7 @@ public class OrderService {
             prepareOrderDto.setOrderNo(orderNo);
             return prepareOrderDto;
         }catch (Exception e) {
-            logger.error("生成订单失败,用户id:{},桌子id{},商品{}",new Object[]{uid,tableUid, JSON.toJSON(goodsList)});
+            logger.error("生成订单失败,用户id:{},桌子id:{},商品:{}",new Object[]{uid,tableUid, JSON.toJSON(goodsList)});
             // 若出现异常，解除库存锁定
             unLockOrderGoodsNum(orderNo,goodsList.stream().map(PlaceOrderDto::getGoodsId).collect(Collectors.toList()));
             throw e;

@@ -182,7 +182,7 @@
     </if>
   </select>
 
-  <select id="insertBatch">
+  <insert id="insertBatch">
     insert into sys_order_detail
     (order_no, goods_id, num,
     amount_origin, amount, discount,
@@ -195,7 +195,7 @@
       #{item.createTime,jdbcType=TIMESTAMP}, #{item.creator,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP},
       #{item.updator,jdbcType=VARCHAR})
     </foreach>
-  </select>
+  </insert>
 
   <select id="getOrderDetailListByOrderNo" resultMap="BaseResultMap">
     select

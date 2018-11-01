@@ -78,7 +78,8 @@ public class PayService {
             List<Long> goodsIds = new ArrayList<>();
             for(OrderDetail orderDetail : orderDetailList){
                 // 减相应的库存
-                goodsMapper.updateStock(ImmutableMap.of("id",orderDetail.getGoodsId(),"number",orderDetail.getNum()));
+                goodsMapper.updateStock(ImmutableMap.of("id",orderDetail.getGoodsId(),"stockNumber",orderDetail.getNum(),
+                        "qtySaleNumber",orderDetail.getNum()));
                 goodsIds.add(orderDetail.getGoodsId());
             }
             // 解锁

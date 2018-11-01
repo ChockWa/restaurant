@@ -276,7 +276,7 @@
 
   <update id="updateStock" parameterType="Map">
     update sys_goods
-    set stock = stock - #{number}
+    set stock = stock - #{stockNumber},qty_sale = qty_sale + #{qtySaleNumber}
     where id = #{id}
   </update>
 </mapper>

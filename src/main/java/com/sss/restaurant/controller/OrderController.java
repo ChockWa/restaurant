@@ -1,13 +1,16 @@
 package com.sss.restaurant.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.ImmutableMap;
 import com.sss.restaurant.common.info.UserInfo;
 import com.sss.restaurant.common.response.Result;
-import com.sss.restaurant.order.dto.PlaceOrderBody;
+import com.sss.restaurant.order.dto.PlaceOrderDto;
 import com.sss.restaurant.order.dto.PrepareOrderDto;
 import com.sss.restaurant.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("order")
@@ -18,13 +21,14 @@ public class OrderController {
 
     /**
      * 下单
-     * @param placeOrderBody
+     * @param list
      * @return
      */
-    @RequestMapping("placeOrder")
-    public Result placeOrder(@RequestBody PlaceOrderBody placeOrderBody){
+    @RequestMapping(value = "placeOrder")
+    public Result placeOrder(@RequestParam("goodsList")String list){
+        List<PlaceOrderDto> goodsList = JSON.parseArray(list,PlaceOrderDto.class);
         PrepareOrderDto prepareOrderDto = orderService.placeOrder(UserInfo.getInfo().getTableUid(), UserInfo.getInfo().getUid()
-                , placeOrderBody.getGoodsList());
+                , goodsList);
         return Result.SUCCESS.setData(prepareOrderDto);
     }
 

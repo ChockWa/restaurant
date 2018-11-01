@@ -101,7 +101,20 @@ public class Goods implements Serializable {
      */
     private String updator;
 
+    /**
+     * 获取赞数
+     */
+    private int praise;
+
     private static final long serialVersionUID = 1L;
+
+    public int getPraise() {
+        return praise;
+    }
+
+    public void setPraise(int praise) {
+        this.praise = praise;
+    }
 
     public Integer getTotal() {
         return total;
