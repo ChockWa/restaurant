@@ -19,7 +19,7 @@ public class TableController {
      * @return
      */
     @RequestMapping("openTable")
-    public Result openTable(@RequestParam("tableUid")String tableUid, @RequestParam("deviceId")String deviceId){
+    public Result openTable(@RequestParam(value = "tableUid")String tableUid, @RequestParam(value = "deviceId")String deviceId){
         return Result.SUCCESS.setData("accessToken",tableService.openTable(deviceId, tableUid));
     }
 }
