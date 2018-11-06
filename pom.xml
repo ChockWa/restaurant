@@ -147,7 +147,48 @@
 
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<!-- 测试环境 -->
+				<env>development</env>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<!-- 正式环境 -->
+				<env>product</env>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
+		<finalName>restaurant</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<!-- 资源根目录排除各环境的配置，使用单独的资源目录来指定 -->
+				<excludes>
+					<exclude>development/*</exclude>
+					<exclude>product/*</exclude>
+				</excludes>
+			</resource>
+			<!--<resource>-->
+				<!--<directory>src/main/resources/${env}</directory>-->
+			<!--</resource>-->
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>${env}/*.properties</include>
+					<!--使用<include>${env}</include>则加不进去-->
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
