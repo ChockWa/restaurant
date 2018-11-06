@@ -185,6 +185,7 @@
 				<directory>src/main/resources</directory>
 				<includes>
 					<include>${env}/*.properties</include>
+					<include>${env}/*.xml</include>
 					<!--使用<include>${env}</include>则加不进去-->
 				</includes>
 			</resource>
